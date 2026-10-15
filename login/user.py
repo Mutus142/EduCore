@@ -45,3 +45,32 @@ def login_user():
                 else:
                     print("Opção invalida!")
                     return
+
+            else:
+                print("Usuário validado!")
+
+                time.sleep(2)
+
+                try:
+                    senha = str(input("Digite a sua senha: "))
+                except ValueError:
+                    print("Valor invalido!")
+                    return
+
+                with conectar_banco() as conexao:
+                    with conexao.cursor() as cursor:
+                        cursor.execute(
+                            "select senha from usuarios where usuario = %s and senha = %s",(user, senha)
+                        )
+                        
+                        resultado2 = cursor.fetchone()
+
+                        if resultado2 is None:
+                            print("Senha invalida!")
+                            return
+                        
+                        else:
+                            print("Senha validada!")
+                            time.sleep(2)
+
+                            menu()
