@@ -165,3 +165,66 @@ def remover_aluno():
                     else:
                         print("[ERRO] Opção inválida! Utilize S ou N.")
                         continue
+
+
+def editar_aluno():
+
+    while True:
+        try:
+            nome = str(input("Nome do Aluno: "))
+        except ValueError:
+            print("Invalido!")
+            continue
+
+        with conectar_banco() as conexao:
+            with conexao.cursor() as cursor:
+                cursor.execute(
+                    "select nome from alunos where nome = %s", (nome,)
+                )
+
+                resultado = cursor.fetchone()
+
+                if resultado is None:
+                    print("Aluno não encontrado!")
+                    continue
+
+                else:
+                    print('''
+                    O que voce quer editar?
+                    1 - Nome
+                    2 - Turma                
+                    ''')
+
+                    try:
+                        escolha = int(input("Escolha uma opção: "))
+                    except ValueError:
+                        print("Invalido!")
+                        continue
+
+                    if escolha == 1:
+
+                        try:
+                            nome_novo = str(input("Nome novo: "))
+                        except ValueError:
+                            print("Invalido!")
+                            continue
+
+                        cursor.execute(
+                            "update alunos set nome = %s where nome = %s", (nome_novo, nome)
+                        )
+
+                    elif escolha == 2:
+
+                        try:
+                            turma = int(input("Turma nova: "))
+                        except ValueError:
+                            print("Valor invalido!")
+                            continue
+
+                        cursor.execute(
+                            "update alunos set turma = %s where nome = %s", (turma, nome)
+                        )
+
+                    else:
+                        print("Opção invalida!")
+                        continue
