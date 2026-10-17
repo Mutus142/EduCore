@@ -49,3 +49,40 @@ def cad_aluno():
 ----------------------------------------
 """)
                     return
+
+
+def ver_aluno():
+
+    while True:
+
+        try:
+            nome = str(input("Nome do aluno: "))
+        except ValueError:
+            print("Invalido!")
+            continue
+
+        with conectar_banco() as conexao:
+            with conexao.cursor() as cursor:
+                cursor.execute(
+                    "select nome from alunos where nome = %s", (nome,)
+                )
+
+                resultado = cursor.fetchone()
+
+                if resultado is None:
+                    print("Aluno não encontrado!")
+                    continue
+
+                else:
+
+                    cursor.execute(
+                        "select turma from alunos where nome = %s", (nome)
+                    )
+                    
+                    turma = cursor.fetchone()
+                     
+                    print(f'''
+                    Nome: {nome}
+                    Turma: {turma}
+
+                    ''')

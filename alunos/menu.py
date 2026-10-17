@@ -1,5 +1,5 @@
 from alunos.services import cad_aluno
-
+from alunos.services import ver_aluno
 
 while True:
 
