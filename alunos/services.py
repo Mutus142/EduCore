@@ -51,38 +51,51 @@ def cad_aluno():
                     return
 
 
+
 def ver_aluno():
 
     while True:
 
+        print("""
+========================================
+        EDUCORE | CONSULTAR ALUNO
+========================================
+""")
+
         try:
-            nome = str(input("Nome do aluno: "))
+            nome = str(input(" > Nome do aluno: "))
         except ValueError:
-            print("Invalido!")
+            print("[ERRO] Nome inválido!")
             continue
 
         with conectar_banco() as conexao:
             with conexao.cursor() as cursor:
                 cursor.execute(
-                    "select nome from alunos where nome = %s", (nome,)
+                    "SELECT nome FROM alunos WHERE nome = %s",
+                    (nome,)
                 )
 
                 resultado = cursor.fetchone()
 
                 if resultado is None:
-                    print("Aluno não encontrado!")
+                    print("\n[ERRO] Aluno não encontrado!")
                     continue
 
                 else:
 
                     cursor.execute(
-                        "select turma from alunos where nome = %s", (nome)
+                        "SELECT turma FROM alunos WHERE nome = %s",
+                        (nome,)
                     )
-                    
-                    turma = cursor.fetchone()
-                     
-                    print(f'''
-                    Nome: {nome}
-                    Turma: {turma}
 
-                    ''')
+                    turma = cursor.fetchone()
+
+                    print(f"""
+----------------------------------------
+          DADOS DO ALUNO
+----------------------------------------
+ Nome  : {nome}
+ Turma : {turma[0]}
+----------------------------------------
+""")
+                    return
