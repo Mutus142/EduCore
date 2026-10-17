@@ -1,6 +1,7 @@
 
 import time
 from alunos.menu import alunos
+from notas.menu import notas
 
 while True:
 
