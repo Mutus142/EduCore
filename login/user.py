@@ -1,19 +1,25 @@
+
 from database.conector import conectar_banco
 import psycopg
 import time
 from menu.menu import menu
 from login.cadastro import cad_user
 
+
 def login_user():
 
     while True:
 
-        print("Bem vindo ao EduCore!")
+        print("""
+========================================
+            EDUCORE | LOGIN
+========================================
+""")
 
         try:
-            user = str(input("Qual é seu usuario? "))
+            user = str(input(" > Usuário: "))
         except ValueError:
-            print("Valor invalido!")
+            print("[ERRO] Usuário inválido!")
             continue
 
         with conectar_banco() as conexao:
@@ -26,20 +32,22 @@ def login_user():
                 resultado = cursor.fetchone()
 
                 if resultado is None:
-                    print("Usuário não encontrado!")
+                    print("\n[ERRO] Usuário não encontrado!")
                     time.sleep(2)
 
-                    print("Voce quer tentar novamente ou cadastrar-se? ")
-
-                    print('''
-                    1 - Tentar novamente
-                    2 - Cadastrar-se
-                    ''')
+                    print("""
+----------------------------------------
+          OPÇÕES DISPONÍVEIS
+----------------------------------------
+ [1] Tentar novamente
+ [2] Cadastrar-se
+----------------------------------------
+""")
 
                     try:
-                        escolha = int(input("Escolha uma opção: "))
+                        escolha = int(input(" > Escolha uma opção: "))
                     except ValueError:
-                        print("Valor invalido!")
+                        print("[ERRO] Opção inválida!")
                         continue
 
                     if escolha == 1:
@@ -47,19 +55,20 @@ def login_user():
 
                     elif escolha == 2:
                         cad_user()
+                        return
 
                     else:
-                        print("Opção invalida!")
+                        print("[ERRO] Opção inválida!")
                         continue
 
                 else:
-                    print("Usuário validado!")
+                    print("\n[OK] Usuário encontrado!")
                     time.sleep(2)
 
                     try:
-                        senha = str(input("Digite a sua senha: "))
+                        senha = str(input(" > Senha: "))
                     except ValueError:
-                        print("Valor invalido!")
+                        print("[ERRO] Senha inválida!")
                         continue
 
                     with conectar_banco() as conexao:
@@ -72,11 +81,15 @@ def login_user():
                             resultado2 = cursor.fetchone()
 
                             if resultado2 is None:
-                                print("Senha invalida!")
+                                print("\n[ERRO] Senha incorreta!")
                                 continue
 
                             else:
-                                print("Senha validada!")
+                                print("""
+----------------------------------------
+       LOGIN REALIZADO COM SUCESSO!
+----------------------------------------
+""")
                                 time.sleep(2)
 
                                 menu()
