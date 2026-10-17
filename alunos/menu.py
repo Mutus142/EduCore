@@ -1,3 +1,5 @@
+from alunos.services import cad_aluno
+
 
 while True:
 
