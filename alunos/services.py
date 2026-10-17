@@ -99,3 +99,69 @@ def ver_aluno():
 ----------------------------------------
 """)
                     return
+
+
+def remover_aluno():
+
+    while True:
+
+        print("""
+========================================
+        EDUCORE | REMOVER ALUNO
+========================================
+""")
+
+        try:
+            nome = str(input(" > Nome do aluno: "))
+        except ValueError:
+            print("[ERRO] Nome inválido!")
+            continue
+
+        with conectar_banco() as conexao:
+            with conexao.cursor() as cursor:
+                cursor.execute(
+                    "SELECT nome FROM alunos WHERE nome = %s AND ativo = TRUE",
+                    (nome,)
+                )
+
+                resultado = cursor.fetchone()
+
+                if resultado is None:
+                    print("\n[ERRO] Aluno não encontrado ou já está inativo!")
+                    continue
+
+                else:
+
+                    print(f"""
+----------------------------------------
+       CONFIRMAÇÃO DE REMOÇÃO
+----------------------------------------
+ Aluno : {nome}
+
+ Deseja realmente desativar este aluno?
+----------------------------------------
+""")
+
+                    confirmacao = input(" > Confirmar (S/N): ").strip().upper()
+
+                    if confirmacao == 'S':
+
+                        cursor.execute(
+                            "UPDATE alunos SET ativo = FALSE WHERE nome = %s",
+                            (nome,)
+                        )
+
+                        print("""
+----------------------------------------
+       ALUNO DESATIVADO COM SUCESSO!
+----------------------------------------
+""")
+                        return
+
+                    elif confirmacao == 'N':
+                        print("\n[AVISO] Operação cancelada!")
+                        return
+
+                    else:
+                        print("[ERRO] Opção inválida! Utilize S ou N.")
+                        continue
