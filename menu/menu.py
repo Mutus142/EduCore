@@ -1,23 +1,26 @@
-import time    
+
+import time
 from alunos.menu import alunos
 
 while True:
 
     def menu():
-        print("Bem vindo ao menu!")
-
-        print('''
-        1 - Gerenciamento de Alunos
-        2 - Gerenciamento de Notas
-        3 - Gerenciamento de Turmas
-        4 - Estatisticas Gerais
-        5 - Sair
-         ''')
+        print("""
+========================================
+          EDUCORE | MENU PRINCIPAL
+========================================
+ [1] Gerenciamento de Alunos
+ [2] Gerenciamento de Notas
+ [3] Gerenciamento de Turmas
+ [4] Estatísticas Gerais
+ [5] Sair
+========================================
+""")
 
         try:
             escolha = int(input("Escolha uma opção: "))
         except ValueError:
-            print("invalido!")
+            print("[ERRO] Opção inválida!")
             continue
 
         if escolha == 1:
@@ -33,10 +36,9 @@ while True:
             estatisticas()
 
         elif escolha == 5:
-            print("Saindo...")
+            print("[AVISO] Encerrando o menu do EduCore...")
             break
 
         else:
-            print("Opção invalida!")
+            print("[ERRO] Opção inválida!")
             continue
-        

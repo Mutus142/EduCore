@@ -1,22 +1,23 @@
 
-
 while True:
 
     def alunos():
-        print("bem vindo ao serviço de alunos!")
-
-        print('''
-        1 - Cadastro de Aluno
-        2 - Visualizar Aluno
-        3 - Editar Aluno
-        4 - Remover Aluno
-        5 - Voltar ao menu principal
-        ''')
+        print("""
+========================================
+           EDUCORE | ALUNOS
+========================================
+ [1] Cadastrar aluno
+ [2] Visualizar alunos
+ [3] Editar aluno
+ [4] Remover aluno
+ [5] Voltar ao menu principal
+========================================
+""")
 
         try:
             escolha = int(input("Escolha uma opção: "))
         except ValueError:
-            print("Invalido!")
+            print("[ERRO] Opção inválida!")
             continue
 
         if escolha == 1:
@@ -32,9 +33,9 @@ while True:
             remover_aluno()
 
         elif escolha == 5:
-            print("Voltando ao menu...")
+            print("[AVISO] Retornando ao menu principal...")
             return
 
         else:
-            print("Opção invalida!")
+            print("[ERRO] Opção inválida!")
             continue
