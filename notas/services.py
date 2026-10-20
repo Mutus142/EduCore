@@ -171,43 +171,63 @@ def editar_nota():
                         return
 
 
+
 def ver_notas():
 
     while True:
 
-        print("Modulo de ver notas!")
+        print("""
+========================================
+        EDUCORE | CONSULTAR NOTAS
+========================================
+""")
 
-        try:
-            nome = str(input("Nome do Aluno: ")).strip()
-        except ValueError:
-            print("invalido!")
+        nome = input(" > Nome do aluno: ").strip()
+
+        if not nome:
+            print("[ERRO] Nome inválido!")
             continue
 
         with conectar_banco() as conexao:
             with conexao.cursor() as cursor:
                 cursor.execute(
-                    "select nome from alunos where nome = %s", (nome,)
+                    "SELECT nome FROM alunos WHERE nome = %s",
+                    (nome,)
                 )
 
                 resultado = cursor.fetchone()
 
                 if resultado is None:
-                    print("Aluno não encontrado!")
+                    print("\n[ERRO] Aluno não encontrado!")
                     continue
 
                 else:
                     cursor.execute(
-                        """ select a.valor 
-                            from notas a
-                            inner join alunos b
-	                        on a.id_aluno = b.id_aluno
+                        """
+                        SELECT a.valor
+                        FROM notas a
+                        INNER JOIN alunos b
+                            ON a.id_aluno = b.id_aluno
+                        WHERE b.nome = %s
+                        """,
+                        (nome,)
+                    )
 
-                            where b.nome = %s""",
-                    (nome,))
-
-                    notas = cursor.fetchone()
+                    notas = cursor.fetchall()
 
                     print(f"""
-                    Aluno: {nome}
-                    Notas: {notas}
-                    """)
+----------------------------------------
+           NOTAS DO ALUNO
+----------------------------------------
+ Aluno : {nome}
+----------------------------------------
+""")
+
+                    if not notas:
+                        print(" [AVISO] Nenhuma nota cadastrada!")
+                    else:
+                        for indice, nota in enumerate(notas, start=1):
+                            print(f" [{indice}] Nota: {nota[0]}")
+
+                    print("----------------------------------------")
+                    return
