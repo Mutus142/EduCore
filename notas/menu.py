@@ -1,3 +1,4 @@
+
 from notas.services import add_nota
 from notas.services import editar_nota
 #from notas.services import ver_notas
@@ -7,19 +8,21 @@ def notas():
 
     while True:
 
-        print('''
-        Bem vindo ao modulo de notas!
-        
-        1 - Adicionar Nota 
-        2 - Editar Nota
-        3 - Ver notas de um aluno
-        4 - Voltar ao menu principal
-        ''')
+        print("""
+========================================
+           EDUCORE | NOTAS
+========================================
+ [1] Adicionar nota
+ [2] Editar nota
+ [3] Visualizar notas de um aluno
+ [4] Voltar ao menu principal
+========================================
+""")
 
         try:
-            escolha = int(input("Escolha uma opção: "))
+            escolha = int(input(" > Escolha uma opção: "))
         except ValueError:
-            print("Invalido!")
+            print("[ERRO] Opção inválida!")
             continue
 
         if escolha == 1:
@@ -30,12 +33,12 @@ def notas():
 
         elif escolha == 3:
             #ver_notas()
-            print('teste')
+            print("[AVISO] Visualização de notas em desenvolvimento!")
 
         elif escolha == 4:
-            print("Voltando...")
+            print("[AVISO] Retornando ao menu principal...")
             return
 
         else:
-            print("Opção Invalida!")
+            print("[ERRO] Opção inválida!")
             continue

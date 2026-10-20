@@ -94,61 +94,78 @@ def editar_nota():
 ========================================
 """)
 
-        try:
-            nome = str(input("Nome do Aluno: "))
-        except ValueError:
-            print("Invalido!")
+        nome = input(" > Nome do aluno: ").strip()
+
+        if not nome:
+            print("[ERRO] Nome inválido!")
             continue
 
         with conectar_banco() as conexao:
             with conexao.cursor() as cursor:
                 cursor.execute(
-                    "select nome from alunos where nome = %s", (nome,)
+                    "SELECT nome FROM alunos WHERE nome = %s",
+                    (nome,)
                 )
 
                 resultado = cursor.fetchone()
 
                 if resultado is None:
-                    print("Aluno não encontrado!")
+                    print("\n[ERRO] Aluno não encontrado!")
+                    continue
 
                 else:
 
                     try:
-                        nota = int(input("Qual nota quer editar? "))
+                        nota = float(input(" > Qual nota deseja editar? "))
                     except ValueError:
-                        print("Invalido!")
+                        print("[ERRO] Nota inválida!")
                         continue
 
                     cursor.execute(
-                    """select a.valor 
-                        from notas a
-                        inner join alunos b
-	                    on a.id_aluno = b.id_aluno
-
-                        where b.nome = %s
-                        and a.valor =%s""",
-                    (nome, nota))
+                        """
+                        SELECT a.valor
+                        FROM notas a
+                        INNER JOIN alunos b
+                            ON a.id_aluno = b.id_aluno
+                        WHERE b.nome = %s
+                          AND a.valor = %s
+                        """,
+                        (nome, nota)
+                    )
 
                     resultado_nota = cursor.fetchone()
 
                     if resultado_nota is None:
-                        print("Nota não encontrada!")
+                        print("\n[ERRO] Nota não encontrada!")
                         continue
 
                     else:
+
                         try:
-                            nota_nova = int(input("Nota nova: "))
+                            nota_nova = float(input(" > Nova nota: "))
+
+                            if not 0 <= nota_nova <= 10 or not math.isfinite(nota_nova):
+                                raise ValueError
+
                         except ValueError:
-                            print("Invalido!")
+                            print("[ERRO] Nota inválida! Digite um valor entre 0 e 10.")
                             continue
 
                         cursor.execute(
-                            """ UPDATE notas a
-                                SET valor = %s
-                                FROM alunos b
-                                WHERE a.id_aluno = b.id_aluno
-                                AND b.nome = %s
-                                AND a.valor = %s""",
-                                (nota_nova, nome, nota))
+                            """
+                            UPDATE notas a
+                            SET valor = %s
+                            FROM alunos b
+                            WHERE a.id_aluno = b.id_aluno
+                              AND b.nome = %s
+                              AND a.valor = %s
+                            """,
+                            (nota_nova, nome, nota)
+                        )
 
-                        print("Nota atualizada!")
+                        print("""
+----------------------------------------
+       NOTA ATUALIZADA COM SUCESSO!
+----------------------------------------
+""")
+                        return
