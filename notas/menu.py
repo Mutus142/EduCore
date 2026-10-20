@@ -1,7 +1,7 @@
 
 from notas.services import add_nota
 from notas.services import editar_nota
-#from notas.services import ver_notas
+from notas.services import ver_notas
 
 
 def notas():
@@ -32,7 +32,7 @@ def notas():
             editar_nota()
 
         elif escolha == 3:
-            #ver_notas()
+            ver_notas()
             print("[AVISO] Visualização de notas em desenvolvimento!")
 
         elif escolha == 4:

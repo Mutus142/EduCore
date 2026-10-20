@@ -55,10 +55,7 @@ def cad_user():
                     """,
                     (nome_user, user, senha)
                 )
-
-        # Fora do bloco with:
-        # A transação já foi confirmada pelo PostgreSQL.
-
+                
         print("""
 ----------------------------------------
      USUÁRIO CADASTRADO COM SUCESSO!

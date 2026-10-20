@@ -169,3 +169,45 @@ def editar_nota():
 ----------------------------------------
 """)
                         return
+
+
+def ver_notas():
+
+    while True:
+
+        print("Modulo de ver notas!")
+
+        try:
+            nome = str(input("Nome do Aluno: ")).strip()
+        except ValueError:
+            print("invalido!")
+            continue
+
+        with conectar_banco() as conexao:
+            with conexao.cursor() as cursor:
+                cursor.execute(
+                    "select nome from alunos where nome = %s", (nome,)
+                )
+
+                resultado = cursor.fetchone()
+
+                if resultado is None:
+                    print("Aluno não encontrado!")
+                    continue
+
+                else:
+                    cursor.execute(
+                        """ select a.valor 
+                            from notas a
+                            inner join alunos b
+	                        on a.id_aluno = b.id_aluno
+
+                            where b.nome = %s""",
+                    (nome,))
+
+                    notas = cursor.fetchone()
+
+                    print(f"""
+                    Aluno: {nome}
+                    Notas: {notas}
+                    """)

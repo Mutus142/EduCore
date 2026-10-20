@@ -1,21 +1,25 @@
+
 from login.user import login_user
 from login.cadastro import cad_user
+
 
 def main():
 
     while True:
 
-        print("Bem vindo ao EduCore!")
-
-        print('''
-1 - Fazer Login
-2 - Cadastrar - se
-        ''')
+        print("""
+========================================
+           EDUCORE | INÍCIO
+========================================
+ [1] Fazer login
+ [2] Cadastrar-se
+========================================
+""")
 
         try:
-            escolha = int(input("Escolha uma opção: "))
+            escolha = int(input(" > Escolha uma opção: "))
         except ValueError:
-            print("Valor invalido!")
+            print("[ERRO] Opção inválida!")
             return
 
         if escolha == 1:
@@ -25,7 +29,7 @@ def main():
             cad_user()
 
         else:
-            print("Escolha invalida!")
+            print("[ERRO] Opção inválida!")
 
 
 if __name__ == "__main__":
