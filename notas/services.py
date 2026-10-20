@@ -1,5 +1,3 @@
-from database.conector import conectar_banco
-
 
 from database.conector import conectar_banco
 import math
@@ -26,28 +24,34 @@ def add_nota():
 
                 cursor.execute(
                     """
-                    SELECT m.id_matricula
-                    FROM alunos a
-                    INNER JOIN matriculas m
-                        ON a.id_aluno = m.id_aluno
-                    WHERE a.nome = %s
-                      AND a.ativo = TRUE
+                    SELECT id_aluno, nome, turma
+                    FROM alunos
+                    WHERE nome = %s AND ativo = TRUE
                     """,
                     (nome,)
                 )
 
-                resultado = cursor.fetchall()
+                resultados = cursor.fetchall()
 
-                if not resultado:
-                    print("\n[ERRO] Aluno ou matrícula não encontrada!")
+                if not resultados:
+                    print("\n[ERRO] Aluno não encontrado!")
                     continue
 
-                if len(resultado) > 1:
-                    print("[ERRO] Mais de uma matrícula encontrada!")
-                    print("[AVISO] Selecione a matrícula pelo ID.")
+                if len(resultados) > 1:
+                    print("[ERRO] Existem alunos com esse nome!")
+                    print("[AVISO] Será necessário consultar pelo ID.")
                     return
 
-                id_matricula = resultado[0][0]
+                id_aluno, nome_aluno, turma = resultados[0]
+
+                print(f"""
+----------------------------------------
+          ALUNO ENCONTRADO
+----------------------------------------
+ Nome  : {nome_aluno}
+ Turma : {turma}
+----------------------------------------
+""")
 
                 try:
                     nota = float(input(" > Valor da nota (0 a 10): "))
@@ -56,7 +60,7 @@ def add_nota():
                         raise ValueError
 
                 except ValueError:
-                    print("[ERRO] Nota inválida! Informe um valor entre 0 e 10.")
+                    print("[ERRO] Nota inválida! Use um valor entre 0 e 10.")
                     continue
 
                 descricao = input(" > Descrição da avaliação: ").strip()
@@ -67,22 +71,25 @@ def add_nota():
 
                 cursor.execute(
                     """
-                    INSERT INTO notas
-                        (id_matricula, valor, descricao)
+                    INSERT INTO notas (id_aluno, valor, descricao)
                     VALUES (%s, %s, %s)
                     """,
-                    (id_matricula, nota, descricao)
+                    (id_aluno, nota, descricao)
                 )
 
-                print("""
+        print("""
 ----------------------------------------
        NOTA ADICIONADA COM SUCESSO!
 ----------------------------------------
 """)
-                return
-
+        return
 
 def editar_nota():
 
-    while True:
-        print()
+    print("""
+========================================
+         EDUCORE | EDITAR NOTA
+========================================
+""")
+
+    print("[AVISO] Funcionalidade em desenvolvimento!")

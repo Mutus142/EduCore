@@ -2,31 +2,42 @@
 from database.conector import conectar_banco
 import time
 from menu.menu import menu
-    
-while True:
-    def cad_user():
+
+
+def cad_user():
+
+    while True:
+
         print("""
 ========================================
           EDUCORE | CADASTRO
 ========================================
 """)
 
-        try:
-            nome_user = str(input("Nome completo: "))
-        except ValueError:
+        nome_user = input(" > Nome completo: ").strip()
+
+        if not nome_user:
             print("[ERRO] Nome inválido!")
             continue
 
-        try:
-            user = str(input("Usuário: "))
-        except ValueError:
+        user = input(" > Usuário: ").strip()
+
+        if not user:
             print("[ERRO] Usuário inválido!")
+            continue
+
+        senha = input(" > Digite sua senha: ")
+
+        if not senha.strip():
+            print("[ERRO] Senha inválida!")
             continue
 
         with conectar_banco() as conexao:
             with conexao.cursor() as cursor:
+
                 cursor.execute(
-                    "select usuario from usuarios where usuario = %s", (user,)
+                    "SELECT usuario FROM usuarios WHERE usuario = %s",
+                    (user,)
                 )
 
                 resultado = cursor.fetchone()
@@ -37,25 +48,26 @@ while True:
                     time.sleep(2)
                     continue
 
-                else:
-                    try:
-                        senha = input("Digite sua senha: ")
-                    except ValueError:
-                        print("[ERRO] Senha inválida!")
-
-        with conectar_banco() as conexao:
-            with conexao.cursor() as cursor:
                 cursor.execute(
-                    "insert into usuarios (nome, usuario, senha) values(%s, %s, %s)", (nome_user, user, senha)
+                    """
+                    INSERT INTO usuarios (nome, usuario, senha)
+                    VALUES (%s, %s, %s)
+                    """,
+                    (nome_user, user, senha)
                 )
 
-                print("""
+        # Fora do bloco with:
+        # A transação já foi confirmada pelo PostgreSQL.
+
+        print("""
 ----------------------------------------
      USUÁRIO CADASTRADO COM SUCESSO!
 ----------------------------------------
 """)
-                time.sleep(2)
 
-                print(f"[OK] Seja bem-vindo ao EduCore, {user}!")
+        time.sleep(2)
 
-                menu()
+        print(f"[OK] Seja bem-vindo ao EduCore, {user}!")
+
+        menu()
+        return

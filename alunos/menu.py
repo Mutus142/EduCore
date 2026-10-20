@@ -1,11 +1,14 @@
+
 from alunos.services import cad_aluno
 from alunos.services import ver_aluno
-from alunos.services import remover_aluno
 from alunos.services import editar_aluno
+from alunos.services import remover_aluno
 
-while True:
 
-    def alunos():
+def alunos():
+
+    while True:
+
         print("""
 ========================================
            EDUCORE | ALUNOS

@@ -1,4 +1,5 @@
 from login.user import login_user
+from login.cadastro import cad_user
 
 def main():
 

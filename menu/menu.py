@@ -3,9 +3,11 @@ import time
 from alunos.menu import alunos
 from notas.menu import notas
 
-while True:
 
-    def menu():
+def menu():
+
+    while True:
+
         print("""
 ========================================
           EDUCORE | MENU PRINCIPAL
@@ -31,10 +33,12 @@ while True:
             notas()
 
         elif escolha == 3:
-            turmas()
+            #turmas()
+            print('tetse')
 
         elif escolha == 4:
-            estatisticas()
+            #estatisticas()
+            print("teste")
 
         elif escolha == 5:
             print("[AVISO] Encerrando o menu do EduCore...")
