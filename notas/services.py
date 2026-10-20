@@ -86,10 +86,69 @@ def add_nota():
 
 def editar_nota():
 
-    print("""
+    while True:
+
+        print("""
 ========================================
          EDUCORE | EDITAR NOTA
 ========================================
 """)
 
-    print("[AVISO] Funcionalidade em desenvolvimento!")
+        try:
+            nome = str(input("Nome do Aluno: "))
+        except ValueError:
+            print("Invalido!")
+            continue
+
+        with conectar_banco() as conexao:
+            with conexao.cursor() as cursor:
+                cursor.execute(
+                    "select nome from alunos where nome = %s", (nome,)
+                )
+
+                resultado = cursor.fetchone()
+
+                if resultado is None:
+                    print("Aluno não encontrado!")
+
+                else:
+
+                    try:
+                        nota = int(input("Qual nota quer editar? "))
+                    except ValueError:
+                        print("Invalido!")
+                        continue
+
+                    cursor.execute(
+                    """select a.valor 
+                        from notas a
+                        inner join alunos b
+	                    on a.id_aluno = b.id_aluno
+
+                        where b.nome = %s
+                        and a.valor =%s""",
+                    (nome, nota))
+
+                    resultado_nota = cursor.fetchone()
+
+                    if resultado_nota is None:
+                        print("Nota não encontrada!")
+                        continue
+
+                    else:
+                        try:
+                            nota_nova = int(input("Nota nova: "))
+                        except ValueError:
+                            print("Invalido!")
+                            continue
+
+                        cursor.execute(
+                            """ UPDATE notas a
+                                SET valor = %s
+                                FROM alunos b
+                                WHERE a.id_aluno = b.id_aluno
+                                AND b.nome = %s
+                                AND a.valor = %s""",
+                                (nota_nova, nome, nota))
+
+                        print("Nota atualizada!")
