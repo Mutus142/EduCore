@@ -1,5 +1,5 @@
-from estatisticas.services import alunos_est
-
+from estatisticas.services import total
+from estatisticas.services import total_prof
 def estatisticas():
 
 
