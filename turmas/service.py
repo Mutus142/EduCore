@@ -86,12 +86,117 @@ def add_turma():
             print("[ERRO] Opção inválida!")
             continue
 
+
 def editar_turma():
 
     while True:
 
+        print("""
+========================================
+         EDUCORE | EDITAR TURMA
+========================================
+""")
+
         try:
-            turma = int(input("Turma: "))
+            turma = int(input(" > Número da turma: "))
+        except ValueError:
+            print("[ERRO] Turma inválida!")
+            continue
+
+        with conectar_banco() as conexao:
+            with conexao.cursor() as cursor:
+                cursor.execute(
+                    "SELECT nome FROM turmas WHERE nome = %s",
+                    (turma,)
+                )
+
+                resultado = cursor.fetchone()
+
+                if resultado is None:
+                    print("\n[ERRO] Turma não encontrada!")
+                    continue
+
+                else:
+                    print("""
+----------------------------------------
+          OPÇÕES DE EDIÇÃO
+----------------------------------------
+ [1] Alterar número da turma
+ [2] Alterar turno
+----------------------------------------
+""")
+
+                    try:
+                        escolha = int(input(" > Escolha uma opção: "))
+                    except ValueError:
+                        print("[ERRO] Opção inválida!")
+                        continue
+
+                    if escolha == 1:
+
+                        try:
+                            nome_novo = int(input(" > Novo número da turma: "))
+                        except ValueError:
+                            print("[ERRO] Número inválido!")
+                            continue
+
+                        if nome_novo <= 0:
+                            print("[ERRO] Informe um número positivo!")
+                            continue
+
+                        cursor.execute(
+                            "SELECT nome FROM turmas WHERE nome = %s",
+                            (nome_novo,)
+                        )
+
+                        if cursor.fetchone() is not None:
+                            print("[ERRO] Já existe uma turma com esse número!")
+                            continue
+
+                        cursor.execute(
+                            "UPDATE turmas SET nome = %s WHERE nome = %s",
+                            (nome_novo, turma)
+                        )
+
+                        print("""
+----------------------------------------
+     TURMA ATUALIZADA COM SUCESSO!
+----------------------------------------
+""")
+                        return
+
+                    elif escolha == 2:
+
+                        turno_novo = input(" > Novo turno (Manha/Tarde): ").strip().capitalize()
+
+                        if turno_novo not in ("Manha", "Tarde"):
+                            print("[ERRO] Turno inválido! Digite Manha ou Tarde.")
+                            continue
+
+                        else:
+                            cursor.execute(
+                                "UPDATE turmas SET turno = %s WHERE nome = %s",
+                                (turno_novo, turma)
+                            )
+
+                            print("""
+----------------------------------------
+      TURNO ATUALIZADO COM SUCESSO!
+----------------------------------------
+""")
+                            return
+
+                    else:
+                        print("[ERRO] Opção inválida!")
+                        continue
+
+]
+def remover_turma():
+
+    while True:
+
+        try:
+            turma = int(input("Turma que deseja excluir: "))
         except ValueError:
             print("Invalido!")
             continue
@@ -99,7 +204,7 @@ def editar_turma():
         with conectar_banco() as conexao:
             with conexao.cursor() as cursor:
                 cursor.execute(
-                    "select nome from turmas where nome = %s", (turma,)
+                    "select nome from turmas where nome = %s", (turma)
                 )
 
                 resultado = cursor.fetchone()
@@ -109,47 +214,22 @@ def editar_turma():
                     continue
 
                 else:
-                    print('''
-                    Voce quer alterar o que?
-                    1 - Nome
-                    2 - Turno
-                    ''')
 
-                    try:
-                        escolha = int(input("Escolha uma opção: "))
-                    except ValueError:
-                        print("Invalido!")
-                        continue
+                    confirmacao = input("Tem certeza dessa operação? S/N").upper()
 
-                    if escolha == 1:
+                    if confirmacao not in ("S" , "N"):
+                        print("Invalido! Utilize S/N")
 
-                        try:
-                            nome_novo = int(input("Nome novo da Turma: "))
-                        except ValueError:
-                            print("Invalido!")
-                            continue
+                    elif confirmacao == "S":
 
                         cursor.execute(
-                            "update turmas set nome = %s where nome = %s", (nome_novo, turma)
+                            "delete from turmas where nome = %s", (turma,)
                         )
 
-                        print("Nome alterado com sucesso!")
+                        print("Turma removida!")
 
-                    elif escolha == 2:
+                    elif confirmacao == "N":
+                        print("Operação abortada!")
+                        return
 
-                        turno_novo = input("Turno novo Manha/Tarde : ")
-
-                        if turno_novo is not in ("Manha" , "Tarde")
-                            print("Invalido! Digite Manha ou Tarde!")
-
-                        else:
-                            cursor.execute(
-                                "update turmas set turno = %s where nome = %s", (turno_novo, turma)
-                            )
-
-                            print("Turno Alterado com sucesso!")
-
-
-                    else:
-
-                        print("Opção invalida!")
+            return
