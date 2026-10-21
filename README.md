@@ -4,13 +4,13 @@
 
 ### Sistema de Gerenciamento Acadêmico em Python
 
-**Uma aplicação de terminal para gerenciamento de alunos, turmas, notas e usuários, com persistência de dados em PostgreSQL.**
+**Uma aplicação de terminal para gerenciamento de alunos, turmas, notas, usuários e estatísticas, com persistência de dados em PostgreSQL.**
 
 ![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-openSUSE-73BA25?style=for-the-badge&logo=opensuse&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Em_Desenvolvimento-orange?style=for-the-badge)
-![Version](https://img.shields.io/badge/Versão-1.0-blue?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Versão_Funcional-28A745?style=for-the-badge)
+![Version](https://img.shields.io/badge/Versão-1.0.0-blue?style=for-the-badge)
 
 </div>
 
@@ -18,15 +18,17 @@
 
 ## 📌 Sobre o projeto
 
-O **EduCore** é um sistema de gerenciamento acadêmico desenvolvido em Python, com interface de linha de comando (CLI) e persistência de dados em PostgreSQL.
+O **EduCore** é um sistema de gerenciamento acadêmico desenvolvido em Python, com interface de linha de comando (CLI) e integração com PostgreSQL.
 
 O projeto surgiu como uma reconstrução completa do antigo [Student Manager](https://github.com/Mutus142/Student-Manager), um dos meus primeiros projetos de programação.
 
-Nesta nova versão, o objetivo é desenvolver uma aplicação mais organizada, modular e funcional, utilizando conhecimentos adquiridos em Python, SQL, bancos de dados relacionais e desenvolvimento de sistemas.
+Nesta nova versão, o objetivo foi desenvolver uma aplicação mais organizada, modular e funcional, aplicando conhecimentos adquiridos em Python, SQL, bancos de dados relacionais e desenvolvimento de sistemas.
 
-O EduCore permite realizar operações de cadastro, consulta, edição e gerenciamento de informações acadêmicas, mantendo os dados armazenados em um banco PostgreSQL.
+O EduCore permite realizar operações de cadastro, consulta, edição e gerenciamento de informações acadêmicas, mantendo os dados armazenados em PostgreSQL.
 
-O desenvolvimento também tem como objetivo aprofundar conhecimentos em validação de dados, tratamento de exceções, integração entre módulos e organização de código.
+A **versão 1.0** marca a conclusão do desenvolvimento dos cinco módulos principais: autenticação, alunos, turmas, notas e estatísticas.
+
+O desenvolvimento também proporcionou a aplicação prática de conceitos como validação de dados, tratamento de exceções, relacionamentos SQL, controle de transações e integração entre diferentes módulos Python.
 
 ---
 
@@ -45,8 +47,9 @@ O módulo de autenticação controla o acesso às funcionalidades do sistema.
 - Tratamento de credenciais incorretas.
 - Redirecionamento para cadastro.
 - Acesso ao menu principal após autenticação.
+- Persistência dos registros no banco de dados.
 
-**Status:** funcionalidade implementada em versão inicial, com melhorias de segurança pendentes.
+**Status:** módulo funcional na versão 1.0, com melhorias de segurança previstas para futuras atualizações.
 
 ### 👨‍🎓 Gerenciamento de alunos
 
@@ -66,7 +69,7 @@ Módulo responsável pelas operações de cadastro e manutenção dos estudantes
 
 A remoção utiliza uma abordagem de **exclusão lógica (soft delete)**, alterando a situação do aluno para inativo sem excluir permanentemente seu registro.
 
-**Status:** CRUD inicial implementado, em fase de testes e aprimoramento.
+**Status:** funcionalidades principais desenvolvidas e testadas manualmente.
 
 ### 🏫 Gerenciamento de turmas
 
@@ -81,10 +84,11 @@ Módulo responsável pela organização das turmas acadêmicas.
 - Alteração do turno.
 - Remoção de turmas mediante confirmação.
 - Validação de números e opções.
+- Persistência das alterações no PostgreSQL.
 
 As turmas são identificadas por valores numéricos inteiros.
 
-**Status:** operações principais implementadas, com testes de integração pendentes.
+**Status:** módulo funcional na versão 1.0.
 
 ### 📝 Gerenciamento de notas
 
@@ -99,42 +103,44 @@ Módulo destinado ao registro e acompanhamento do desempenho dos alunos.
 - Edição de notas existentes.
 - Validação de valores.
 - Utilização de `INNER JOIN` para consultas relacionais.
+- Recuperação de múltiplas notas utilizando `fetchall()`.
 
-O sistema permite registrar múltiplas avaliações para um mesmo estudante.
+O sistema permite registrar múltiplas avaliações para um mesmo estudante, armazenando seus valores e descrições no banco de dados.
 
-**Status:** cadastro, edição e consulta desenvolvidos, em processo de validação e testes.
+**Status:** cadastro, edição e consulta desenvolvidos para a versão 1.0.
 
 ### 📊 Estatísticas gerais
 
-Funcionalidade planejada para apresentar indicadores acadêmicos utilizando consultas SQL.
+Módulo responsável pela consulta de indicadores do sistema através de funções de agregação SQL.
 
-**Funcionalidades previstas:**
+**Funcionalidades implementadas:**
 
-- Total de alunos cadastrados.
-- Quantidade de alunos ativos e inativos.
-- Distribuição de alunos por turma.
-- Quantidade de avaliações registradas.
-- Média geral de notas.
-- Médias individuais.
-- Estatísticas de desempenho acadêmico.
+- Consulta do total de alunos ativos.
+- Consulta do total de usuários ativos, apresentados como professores na interface.
+- Contagem de registros utilizando `COUNT(*)`.
+- Filtragem de registros ativos.
+- Navegação entre os indicadores.
+- Integração com PostgreSQL.
 
-**Status:** planejado para conclusão da versão 1.0.
+As estatísticas são calculadas diretamente no banco de dados, permitindo consultar os totais atualizados conforme os registros são modificados.
+
+**Status:** módulo inicial concluído e funcional na versão 1.0.
 
 ---
 
 ## 🛠️ Tecnologias utilizadas
 
-| Tecnologia       | Aplicação                        |
-| ---------------- | -------------------------------- |
-| Python 3         | Linguagem principal              |
-| PostgreSQL       | Banco de dados relacional        |
-| Psycopg 3        | Integração Python e PostgreSQL   |
-| python-dotenv    | Variáveis de ambiente            |
-| SQL              | Consultas e manipulação de dados |
-| Git              | Controle de versões              |
-| GitHub           | Hospedagem do código             |
-| Linux / openSUSE | Ambiente de desenvolvimento      |
-| VS Code          | Editor de código                 |
+| Tecnologia | Aplicação |
+|---|---|
+| Python 3 | Linguagem principal |
+| PostgreSQL | Banco de dados relacional |
+| Psycopg 3 | Integração Python e PostgreSQL |
+| python-dotenv | Gerenciamento de variáveis de ambiente |
+| SQL | Consultas e manipulação de dados |
+| Git | Controle de versões |
+| GitHub | Hospedagem do código |
+| Linux / openSUSE | Ambiente de desenvolvimento |
+| VS Code | Editor de código |
 
 ### Conceitos aplicados
 
@@ -147,13 +153,17 @@ Funcionalidade planejada para apresentar indicadores acadêmicos utilizando cons
 - Chaves primárias e estrangeiras.
 - Relacionamentos entre tabelas.
 - Consultas utilizando `INNER JOIN`.
+- Comandos `SELECT`, `INSERT`, `UPDATE` e `DELETE`.
+- Funções de agregação como `COUNT(*)`.
+- Métodos `fetchone()` e `fetchall()`.
 - Controle de transações com PostgreSQL.
+- Organização e navegação em aplicações CLI.
 
 ---
 
 ## 🏗️ Arquitetura do projeto
 
-O EduCore possui uma arquitetura modular, dividindo suas funcionalidades em diferentes diretórios para facilitar manutenção e evolução.
+O EduCore utiliza uma estrutura modular, dividindo suas funcionalidades em diferentes diretórios para facilitar a manutenção e evolução do sistema.
 
 ```text
 EduCore/
@@ -181,6 +191,10 @@ EduCore/
 │   ├── menu.py
 │   └── service.py
 │
+├── estatisticas/
+│   ├── menu.py
+│   └── services.py
+│
 ├── database/
 │   ├── __init__.py
 │   └── conector.py
@@ -191,34 +205,35 @@ EduCore/
 └── README.md
 ```
 
-*Estrutura representativa da organização atual. Os arquivos internos do módulo de alunos devem ser consultados no repositório.*
+*Estrutura representativa dos principais módulos da versão 1.0. Os arquivos internos de gerenciamento de alunos podem ser consultados diretamente no repositório.*
 
-### Responsabilidade dos módulos
+### Organização
 
-| Módulo      | Função                                |
-| ----------- | ------------------------------------- |
-| `main.py`   | Inicialização e navegação inicial     |
-| `login/`    | Autenticação e cadastro de usuários   |
-| `menu/`     | Menu principal do sistema             |
-| `alunos/`   | Gerenciamento de estudantes           |
-| `notas/`    | Cadastro, consulta e edição de notas  |
-| `turmas/`   | Cadastro, edição e exclusão de turmas |
-| `database/` | Conexão e comunicação com PostgreSQL  |
+| Módulo | Função |
+|---|---|
+| `main.py` | Inicialização e navegação inicial |
+| `login/` | Autenticação e cadastro de usuários |
+| `menu/` | Menu principal do sistema |
+| `alunos/` | Gerenciamento de estudantes |
+| `notas/` | Cadastro, consulta e edição de notas |
+| `turmas/` | Cadastro, edição e exclusão de turmas |
+| `estatisticas/` | Contagem de alunos e usuários ativos |
+| `database/` | Conexão e comunicação com PostgreSQL |
 
 ---
 
 ## 🗄️ Banco de dados
 
-O EduCore utiliza PostgreSQL para armazenar as informações de forma persistente.
+O EduCore utiliza PostgreSQL como sistema gerenciador de banco de dados relacional.
 
-A arquitetura atual trabalha com quatro tabelas principais:
+A arquitetura funcional da versão 1.0 trabalha com quatro tabelas principais:
 
-| Tabela     | Responsabilidade                         |
-| ---------- | ---------------------------------------- |
-| `usuarios` | Credenciais e situação dos usuários      |
-| `alunos`   | Informações dos estudantes               |
-| `turmas`   | Identificação e turno das turmas         |
-| `notas`    | Notas e avaliações vinculadas aos alunos |
+| Tabela | Responsabilidade |
+|---|---|
+| `usuarios` | Credenciais e situação dos usuários |
+| `alunos` | Informações dos estudantes |
+| `turmas` | Identificação e turno das turmas |
+| `notas` | Notas e avaliações vinculadas aos alunos |
 
 ### Relacionamento entre alunos e notas
 
@@ -244,7 +259,7 @@ NOTAS
 
 Um aluno pode possuir várias notas, mas cada nota está associada a um único aluno.
 
-O número da turma também é armazenado no cadastro do estudante. Sua integração com a tabela `turmas` ainda poderá receber melhorias de integridade referencial.
+O número da turma também é armazenado no cadastro do estudante. Sua integração com a tabela `turmas` poderá receber melhorias de integridade referencial em atualizações futuras.
 
 ### Exemplo de consulta SQL
 
@@ -262,11 +277,21 @@ ORDER BY a.nome;
 
 A consulta permite recuperar as avaliações dos estudantes utilizando um relacionamento entre tabelas.
 
+### Exemplo de estatística SQL
+
+```sql
+SELECT COUNT(*)
+FROM alunos
+WHERE ativo = TRUE;
+```
+
+Essa consulta retorna o número total de alunos ativos cadastrados no EduCore.
+
 ---
 
 ## 💻 Interface CLI
 
-A aplicação utiliza uma interface de terminal padronizada, com menus numerados e mensagens de retorno.
+A aplicação utiliza uma interface de terminal padronizada, com menus numerados, mensagens de retorno e separadores visuais.
 
 ### Menu principal
 
@@ -322,6 +347,18 @@ A aplicação utiliza uma interface de terminal padronizada, com menus numerados
 ========================================
 ```
 
+### Estatísticas gerais
+
+```text
+========================================
+         EDUCORE | ESTATÍSTICAS
+========================================
+ [1] Total de alunos
+ [2] Total de professores
+ [3] Voltar ao menu principal
+========================================
+```
+
 ### Exemplo de cadastro
 
 ```text
@@ -337,7 +374,17 @@ A aplicação utiliza uma interface de terminal padronizada, com menus numerados
 ----------------------------------------
 ```
 
-*Os exemplos representam o formato da interface utilizado no desenvolvimento.*
+### Exemplo de estatística
+
+```text
+========================================
+       EDUCORE | TOTAL DE ALUNOS
+========================================
+ Total de alunos ativos: 15
+========================================
+```
+
+*Os exemplos representam o formato da interface utilizado na versão 1.0.*
 
 ---
 
@@ -350,14 +397,14 @@ git clone https://github.com/Mutus142/EduCore.git
 cd EduCore
 ```
 
-### 2. Criar o ambiente virtual
+### 2. Criar ambiente virtual
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. Instalar as dependências
+### 3. Instalar dependências
 
 ```bash
 python -m pip install "psycopg[binary]" python-dotenv
@@ -365,9 +412,9 @@ python -m pip install "psycopg[binary]" python-dotenv
 
 ### 4. Configurar o PostgreSQL
 
-Crie um banco de dados PostgreSQL e configure as tabelas utilizadas pelo sistema.
+Crie um banco de dados PostgreSQL e configure as tabelas necessárias para a aplicação.
 
-Na raiz do projeto, crie um arquivo `.env` com as informações de conexão:
+Na raiz do projeto, crie o arquivo `.env`:
 
 ```dotenv
 DB_HOST=localhost
@@ -377,19 +424,19 @@ DB_USER=postgres
 DB_PASSWORD=sua_senha
 ```
 
-As variáveis devem corresponder às configurações utilizadas em `database/conector.py`.
+Os nomes das variáveis devem corresponder às configurações utilizadas em `database/conector.py`.
 
-**Segurança:** o arquivo `.env` deve permanecer fora do controle de versão. Não publique credenciais reais.
+**Importante:** nunca publique o arquivo `.env`, credenciais de acesso ou senhas reais no GitHub.
 
-### 5. Executar o EduCore
+### 5. Iniciar o sistema
 
 ```bash
 python main.py
 ```
 
-Após a inicialização, o sistema apresentará as opções de login e cadastro.
+Após a inicialização, o EduCore apresentará o menu inicial com as opções de login e cadastro.
 
-**Observação:** a versão atual ainda está em desenvolvimento. A configuração do esquema PostgreSQL e algumas funcionalidades exigem ajustes antes de uma instalação automatizada.
+**Observação:** a versão 1.0 possui seus módulos funcionais, mas ainda exige configuração manual do banco de dados.
 
 ---
 
@@ -408,8 +455,9 @@ Após a inicialização, o sistema apresentará as opções de login e cadastro.
 - [x] Implementar cadastro inicial.
 - [x] Implementar login inicial.
 - [x] Validar usuários existentes.
+- [x] Integrar autenticação com PostgreSQL.
 - [ ] Implementar armazenamento seguro de senhas com Argon2.
-- [ ] Finalizar validações e testes de autenticação.
+- [ ] Finalizar testes automatizados de autenticação.
 
 ### Alunos
 
@@ -417,15 +465,15 @@ Após a inicialização, o sistema apresentará as opções de login e cadastro.
 - [x] Consultar alunos.
 - [x] Editar nome e turma.
 - [x] Implementar desativação lógica.
+- [x] Testar as operações principais manualmente.
 - [ ] Melhorar identificação de alunos por ID.
-- [ ] Concluir testes do módulo.
 
 ### Notas
 
 - [x] Desenvolver cadastro de notas.
 - [x] Desenvolver edição de notas.
 - [x] Desenvolver consulta de notas.
-- [ ] Finalizar testes de integração.
+- [x] Relacionar notas e alunos.
 - [ ] Implementar cálculo de médias.
 - [ ] Melhorar identificação das avaliações por ID.
 
@@ -434,26 +482,39 @@ Após a inicialização, o sistema apresentará as opções de login e cadastro.
 - [x] Desenvolver cadastro de turmas.
 - [x] Desenvolver edição de turmas.
 - [x] Desenvolver remoção de turmas.
-- [x] Validar relacionamentos com alunos.
-- [x] Concluir testes do módulo.
+- [x] Implementar validações de número e turno.
+- [x] Concluir os testes manuais das operações principais.
+
+### Estatísticas
+
+- [x] Criar módulo de estatísticas.
+- [x] Implementar contagem de alunos ativos.
+- [x] Implementar contagem de usuários ativos.
+- [x] Aplicar funções de agregação SQL.
+- [x] Integrar estatísticas ao menu principal.
 
 ### Finalização
 
-- [ ] Desenvolver estatísticas gerais.
-- [ ] Revisar a integridade do banco de dados.
+- [x] Concluir os cinco módulos principais.
+- [x] Padronizar a interface CLI.
+- [x] Integrar os módulos ao PostgreSQL.
+- [x] Finalizar o desenvolvimento funcional da versão 1.0.
+- [ ] Revisar a integridade referencial do banco.
 - [ ] Melhorar tratamento de erros.
 - [ ] Criar testes automatizados.
-- [ ] Finalizar documentação técnica.
-- [ ] Publicar release estável 1.0.0.
+- [ ] Publicar a release estável após as melhorias de segurança.
 
 ---
 
 ## 🔮 Próximas versões
 
-Após a conclusão da versão 1.0, o EduCore poderá receber novas funcionalidades:
+Após a conclusão funcional da versão 1.0, o projeto poderá evoluir com:
 
+- Armazenamento seguro de senhas com Argon2.
+- Identificação de registros utilizando IDs.
+- Cálculo automático de médias.
 - Interface gráfica para desktop.
-- Perfis e permissões de usuários.
+- Sistema de permissões por perfil.
 - Relatórios acadêmicos avançados.
 - Exportação de boletins.
 - Histórico de alterações.
@@ -463,22 +524,18 @@ Após a conclusão da versão 1.0, o EduCore poderá receber novas funcionalidad
 
 ---
 
+## 🔒 Segurança e limitações
+
+O EduCore é um projeto desenvolvido para fins educacionais e de portfólio.
+
+A implementação inicial de autenticação ainda utiliza senhas em texto puro. Por isso, o sistema não deve ser utilizado em produção ou com credenciais reais até que seja implementado um mecanismo seguro de armazenamento e verificação de senhas, como Argon2.
+
+Também estão previstas melhorias na identificação de registros, nas relações entre tabelas e nos testes automatizados.
+
+---
+
 ## 👨‍💻 Desenvolvedor
 
 **Mateus Ribeiro Simão**
 
-Desenvolvedor em formação, com interesse em Python, bancos de dados, desenvolvimento de sistemas e cibersegurança.
-
-O EduCore integra meu portfólio de projetos e representa a evolução dos conhecimentos adquiridos desde o desenvolvimento do Student Manager.
-
-**GitHub:** [@Mutus142](https://github.com/Mutus142)
-
-**Repositório:** [EduCore](https://github.com/Mutus142/EduCore)
-
----
-
-**EduCore 1.0 — Em desenvolvimento**
-
-*Uma nova evolução do Student Manager, agora com Python e PostgreSQL.*
-
-
+Desenvolvedor em formação, com interesse em Python, bancos de dados,
