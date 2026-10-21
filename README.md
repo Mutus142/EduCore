@@ -477,10 +477,8 @@ O EduCore integra meu portfólio de projetos e representa a evolução dos conhe
 
 ---
 
-\<div align="center">
-
 **EduCore 1.0 — Em desenvolvimento**
 
 *Uma nova evolução do Student Manager, agora com Python e PostgreSQL.*
 
-\</div>
+
