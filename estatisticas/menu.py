@@ -1,4 +1,4 @@
-
+from estatisticas.services import alunos_est
 
 def estatisticas():
 
@@ -7,10 +7,9 @@ def estatisticas():
 
         print('''
         Bem vindo ao modulo de estatisticas!
-        1 - Alunos aprovados e reprovados
-        2 - Total de Alunos
-        3 - Total de Professores
-        4 - Voltar ao menu principal
+        1 - Total de Alunos
+        2 - Total de Professores
+        3 - Voltar ao menu principal
         ''')
 
         try:
@@ -20,14 +19,11 @@ def estatisticas():
             continue
 
         if escolha == 1:
-            alunos_est()
-
-        elif escolha == 2:
             total()
 
-        elif escolha == 3:
+        elif escolha == 2:            
             total_prof()
 
-        elif escolha == 4:
+        elif escolha == 3:
             print("Voltando...")
             return
