@@ -1,29 +1,34 @@
+
 from estatisticas.services import total
 from estatisticas.services import total_prof
-def estatisticas():
 
+
+def estatisticas():
 
     while True:
 
-        print('''
-        Bem vindo ao modulo de estatisticas!
-        1 - Total de Alunos
-        2 - Total de Professores
-        3 - Voltar ao menu principal
-        ''')
+        print("""
+========================================
+         EDUCORE | ESTATÍSTICAS
+========================================
+ [1] Total de alunos
+ [2] Total de professores
+ [3] Voltar ao menu principal
+========================================
+""")
 
         try:
-            escolha = int(input("Escolha uma opção: "))
+            escolha = int(input(" > Escolha uma opção: "))
         except ValueError:
-            print("Invalido!")
+            print("[ERRO] Opção inválida!")
             continue
 
         if escolha == 1:
             total()
 
-        elif escolha == 2:            
+        elif escolha == 2:
             total_prof()
 
         elif escolha == 3:
-            print("Voltando...")
+            print("[AVISO] Retornando ao menu principal...")
             return

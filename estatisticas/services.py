@@ -1,42 +1,53 @@
+
 from database.conector import conectar_banco
 import time
 
+
 def total():
-    while True
+    while True:
 
         with conectar_banco() as conexao:
             with conexao.cursor() as cursor:
                 cursor.execute(
-                "select count(*) from alunos where ativo = 'True' ", 
-            )
+                    "select count(*) from alunos where ativo = 'True' ",
+                )
 
-            resultado = cursor.fetchall()
+                resultado = cursor.fetchone()
 
-            print(f"Total de Alunos: {resultado[0]}")
+            print(f"""
+========================================
+       EDUCORE | TOTAL DE ALUNOS
+========================================
+ Total de alunos ativos: {resultado[0]}
+========================================
+""")
 
             time.sleep(2)
 
-            print('''
-            O que voce quer fazer agora:
-            1 - Total de Professor
-            2 - Voltar ao menu principal
-            ''')
+            print("""
+----------------------------------------
+          OPÇÕES DISPONÍVEIS
+----------------------------------------
+ [1] Consultar total de professores
+ [2] Voltar ao menu principal
+----------------------------------------
+""")
 
             try:
-                opcao = int(input("Escolha uma opção: "))
+                opcao = int(input(" > Escolha uma opção: "))
             except ValueError:
-                print("invalido!")
+                print("[ERRO] Opção inválida!")
                 continue
 
             if opcao == 1:
                 total_prof()
 
             elif opcao == 2:
-                print("Voltando...")
+                print("[AVISO] Retornando ao menu principal...")
                 return
 
             else:
-                print("Invalido!")
+                print("[ERRO] Opção inválida!")
 
 
 def total_prof():
@@ -49,30 +60,39 @@ def total_prof():
                     "select count(*) from usuarios where situacao = 'True' ",
                 )
 
-                resultado = cursor.fetchall()
+                resultado = cursor.fetchone()
 
-                print(f"Total de Professores: {resultado[0]}")
+                print(f"""
+========================================
+     EDUCORE | TOTAL DE PROFESSORES
+========================================
+ Total de professores ativos: {resultado[0]}
+========================================
+""")
 
                 time.sleep(2)
 
-                print('''
-                O que voce quer fazer agora?
-                1 - Total de Alunos
-                2 - Voltar ao menu principal
-                ''')
+                print("""
+----------------------------------------
+          OPÇÕES DISPONÍVEIS
+----------------------------------------
+ [1] Consultar total de alunos
+ [2] Voltar ao menu principal
+----------------------------------------
+""")
 
                 try:
-                    escolha = int(input("Escolha uma opção: "))
+                    escolha = int(input(" > Escolha uma opção: "))
                 except ValueError:
-                    print("Invalido!")
+                    print("[ERRO] Opção inválida!")
                     continue
 
                 if escolha == 1:
                     total()
 
                 elif escolha == 2:
-                    print("Voltando...")
+                    print("[AVISO] Retornando ao menu principal...")
                     return
 
                 else:
-                    print("Invalido!")
+                    print("[ERRO] Opção inválida!")
