@@ -2,7 +2,7 @@
 import time
 from alunos.menu import alunos
 from notas.menu import notas
-
+from turmas.menu import turmas
 
 def menu():
 
@@ -33,8 +33,7 @@ def menu():
             notas()
 
         elif escolha == 3:
-            #turmas()
-            print('tetse')
+            turmas()
 
         elif escolha == 4:
             #estatisticas()

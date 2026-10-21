@@ -190,46 +190,69 @@ def editar_turma():
                         print("[ERRO] Opção inválida!")
                         continue
 
-]
+
 def remover_turma():
 
     while True:
 
+        print("""
+========================================
+         EDUCORE | REMOVER TURMA
+========================================
+""")
+
         try:
-            turma = int(input("Turma que deseja excluir: "))
+            turma = int(input(" > Turma que deseja remover: "))
         except ValueError:
-            print("Invalido!")
+            print("[ERRO] Turma inválida!")
             continue
 
         with conectar_banco() as conexao:
             with conexao.cursor() as cursor:
                 cursor.execute(
-                    "select nome from turmas where nome = %s", (turma)
+                    "SELECT nome FROM turmas WHERE nome = %s",
+                    (turma,)
                 )
 
                 resultado = cursor.fetchone()
 
                 if resultado is None:
-                    print("Turma não encontrada!")
+                    print("\n[ERRO] Turma não encontrada!")
                     continue
 
                 else:
 
-                    confirmacao = input("Tem certeza dessa operação? S/N").upper()
+                    print(f"""
+----------------------------------------
+       CONFIRMAÇÃO DE REMOÇÃO
+----------------------------------------
+ Turma : {turma}
 
-                    if confirmacao not in ("S" , "N"):
-                        print("Invalido! Utilize S/N")
+ Deseja realmente remover esta turma?
+----------------------------------------
+""")
+
+                    confirmacao = input(" > Confirmar (S/N): ").strip().upper()
+
+                    if confirmacao not in ("S", "N"):
+                        print("[ERRO] Opção inválida! Utilize S ou N.")
+                        continue
 
                     elif confirmacao == "S":
 
                         cursor.execute(
-                            "delete from turmas where nome = %s", (turma,)
+                            "DELETE FROM turmas WHERE nome = %s",
+                            (turma,)
                         )
 
-                        print("Turma removida!")
+                        print("""
+----------------------------------------
+       TURMA REMOVIDA COM SUCESSO!
+----------------------------------------
+""")
 
                     elif confirmacao == "N":
-                        print("Operação abortada!")
+                        print("\n[AVISO] Operação cancelada!")
                         return
 
-            return
+        return

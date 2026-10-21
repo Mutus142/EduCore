@@ -1,23 +1,28 @@
+
 from turmas.service import add_turma
 from turmas.service import editar_turma
+from turmas.service import remover_turma
+
 
 def turmas():
 
     while True:
 
-        print("Menu do modulo de turmas!")
-
-        print('''
-        Escolha uma opção:
-        1 - Adicionar Turma
-        2 - Editar Turma
-        3 - Remover Turma
-        ''')
+        print("""
+========================================
+           EDUCORE | TURMAS
+========================================
+ [1] Adicionar turma
+ [2] Editar turma
+ [3] Remover turma
+ [4] Voltar ao menu principal
+========================================
+""")
 
         try:
-            escolha = int(input("Escolha uma opção: "))
+            escolha = int(input(" > Escolha uma opção: "))
         except ValueError:
-            print("Invalido!")
+            print("[ERRO] Opção inválida!")
             continue
 
         if escolha == 1:
@@ -30,9 +35,9 @@ def turmas():
             remover_turma()
 
         elif escolha == 4:
-            print("Voltando...")
+            print("[AVISO] Retornando ao menu principal...")
             return
 
         else:
-            print("Escolha invalida!")
+            print("[ERRO] Opção inválida!")
             continue
