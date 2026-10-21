@@ -3,6 +3,7 @@ import time
 from alunos.menu import alunos
 from notas.menu import notas
 from turmas.menu import turmas
+from estatisticas.menu import estatisticas
 
 def menu():
 
@@ -36,8 +37,7 @@ def menu():
             turmas()
 
         elif escolha == 4:
-            #estatisticas()
-            print("teste")
+            estatisticas()
 
         elif escolha == 5:
             print("[AVISO] Encerrando o menu do EduCore...")
