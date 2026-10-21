@@ -1,4 +1,5 @@
-
+from turmas.service import add_turma
+from turmas.service import editar_turma
 
 def turmas():
 
